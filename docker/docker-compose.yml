@@ -1,0 +1,72 @@
+version: '3.5'
+
+services:
+  srv0:
+    build: https://github.com/panubo/docker-sshd
+    ports:
+      - 22
+    volumes:
+      - ./secrets/id_rsa.pub:/root/.ssh/authorized_keys:rw
+      - ./scripts:/opt/gbs
+    environment:
+      - SSH_ENABLE_ROOT=true
+    networks:
+      public_net:
+        aliases:
+          - square0
+        ipv4_address: 192.168.10.11
+
+  srv1:
+    build: https://github.com/panubo/docker-sshd
+    ports:
+      - 22
+    volumes:
+      - ./secrets/id_rsa.pub:/root/.ssh/authorized_keys:rw
+      - ./scripts:/opt/gbs
+    environment:
+      - SSH_ENABLE_ROOT=true
+    networks:
+      public_net:
+        aliases:
+          - square1
+        ipv4_address: 192.168.10.12
+
+  srv2:
+    build: https://github.com/panubo/docker-sshd
+    ports:
+      - 22
+    volumes:
+      - ./secrets/id_rsa.pub:/root/.ssh/authorized_keys:rw
+      - ./scripts:/opt/gbs
+    environment:
+      - SSH_ENABLE_ROOT=true
+    networks:
+      public_net:
+        aliases:
+          - circle0
+        ipv4_address: 192.168.10.13
+
+  srv3:
+    build: https://github.com/panubo/docker-sshd
+    ports:
+      - 22
+    volumes:
+      - ./secrets/id_rsa.pub:/root/.ssh/authorized_keys:rw
+      - ./scripts:/opt/gbs
+    environment:
+      - SSH_ENABLE_ROOT=true
+    networks:
+      public_net:
+        aliases:
+          - triangle0
+        ipv4_address: 192.168.10.14
+
+networks:
+  public_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.10.0/24
+
+
